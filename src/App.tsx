@@ -31,10 +31,10 @@ const Boards = styled.div`
 function App() {
 	const [toDos, setToDos] = useRecoilState(toDoState);
 	const onDragEnd = (info: DropResult) => {
-		if (!info.destination) return;
-		console.log(info);
 		const { destination, draggableId, source } = info;
+		if (!destination) return;
 		if (destination?.droppableId === source.droppableId) {
+			// same board movement
 			setToDos((allBoards) => {
 				const boardCopy = [...allBoards[source.droppableId]];
 				boardCopy.splice(source.index, 1);
@@ -45,12 +45,21 @@ function App() {
 				};
 			});
 		}
-		/* 		setToDos((oldToDos) => {
-			const copy = [...oldToDos];
-			copy.splice(source.index, 1);
-			copy.splice(destination?.index, 0, draggableId);
-			return copy;
-		}); */
+		if (destination?.droppableId !== source.droppableId) {
+			// cross board movement
+			setToDos((allBoards) => {
+				const sourceCopy = [...allBoards[source.droppableId]];
+				const destinationCopy = [...allBoards[destination.droppableId]];
+				sourceCopy.splice(source.index, 1);
+				destinationCopy.splice(destination?.index, 0, draggableId);
+
+				return {
+					...allBoards,
+					[source.droppableId]: sourceCopy,
+					[destination.droppableId]: destinationCopy,
+				};
+			});
+		}
 	};
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
