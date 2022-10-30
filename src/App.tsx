@@ -37,8 +37,9 @@ function App() {
 			// same board movement
 			setToDos((allBoards) => {
 				const boardCopy = [...allBoards[source.droppableId]];
+				const taskObj = boardCopy[source.index];
 				boardCopy.splice(source.index, 1);
-				boardCopy.splice(destination?.index, 0, draggableId);
+				boardCopy.splice(destination?.index, 0, taskObj);
 				return {
 					...allBoards,
 					[source.droppableId]: boardCopy,
@@ -49,9 +50,10 @@ function App() {
 			// cross board movement
 			setToDos((allBoards) => {
 				const sourceCopy = [...allBoards[source.droppableId]];
+				const taskObj = sourceCopy[source.index];
 				const destinationCopy = [...allBoards[destination.droppableId]];
 				sourceCopy.splice(source.index, 1);
-				destinationCopy.splice(destination?.index, 0, draggableId);
+				destinationCopy.splice(destination?.index, 0, taskObj);
 
 				return {
 					...allBoards,
