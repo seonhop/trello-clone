@@ -17,3 +17,10 @@ export const toDoState = atom<IToDoState>({
 		Done: [],
 	},
 });
+
+export const isLightState = atom<boolean>({
+	key: "isLight",
+	default: window.matchMedia("(prefers-color-scheme: light)").matches
+		? true
+		: false,
+});
