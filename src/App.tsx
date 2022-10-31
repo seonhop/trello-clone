@@ -12,6 +12,7 @@ import DroppableBoard from "./Components/DroppableBoard";
 import { lightTheme, darkTheme, defaultTheme } from "./theme";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import NavigationBar from "./Components/NavigationBar";
+import NewBoardBtn from "./Components/NewBoardBtn";
 import { isLightState } from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
@@ -147,6 +148,7 @@ function App() {
 			<GlobalStyle />
 			<BodyWrapper>
 				<NavigationBar />
+				<NewBoardBtn />
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Wrapper>
 						<Boards>
